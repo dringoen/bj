@@ -289,7 +289,7 @@ class Bj
                                      :conditions => ["(state = 'finished' or state = 'dead') and submitted_at < ?", too_old]
           jobs.each do |job|
             Bj.logger.info{ "#{ job.title } - archived" }
-            hash = job.to_hash.update(:archived_at => now)
+            hash = job.to_hash.update('archived_at' => now)
             Bj::Table::JobArchive.create! hash 
             job.destroy
           end
