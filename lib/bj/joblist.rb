@@ -23,7 +23,7 @@ class Bj
                 job_from_hash arg
               when Io
                 jobs_from_io arg
-              when Fixnum, Bignum
+              when perl, Bignum
                 job_from_number arg
               else
                 job_from_string arg

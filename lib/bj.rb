@@ -1,5 +1,5 @@
-unless defined? Bj 
-  class Bj 
+unless defined? Bj
+  class Bj
   #
   # constants and associated attrs
   #
@@ -8,15 +8,15 @@ unless defined? Bj
 
     Bj::LIBDIR = File.expand_path(File::join(File.dirname(__FILE__), "bj")) + File::SEPARATOR unless
       defined? Bj::LIBDIR
-    def self.libdir(*value) 
+    def self.libdir(*value)
       unless value.empty?
         File.join libdir, *value
       else
-        Bj::LIBDIR 
+        Bj::LIBDIR
       end
     end
 
-    module EXIT 
+    module EXIT
       SUCCESS = 0
       FAILURE = 1
       WARNING = 42
@@ -32,7 +32,7 @@ unless defined? Bj
     require "erb"
     require "tempfile"
   #
-  # bootstrap rubygems 
+  # bootstrap rubygems
   #
     begin
       require "rubygems"
@@ -44,17 +44,17 @@ unless defined? Bj
   #
     require "active_record"
   #
-  # rubyforge/remote or local/lib 
+  # rubyforge/remote or local/lib
   #
     %w[ systemu orderedhash fattr ].each do |lib|
       begin
         require lib
-      rescue
+      rescue LoadError
         require libdir(lib)
       end
     end
   #
-  # local 
+  # local
   #
     load libdir("stdext.rb")
     load libdir("util.rb")

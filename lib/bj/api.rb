@@ -5,7 +5,7 @@ class Bj
 #
 # eg.
 #
-#   Bj.table.job.find :all
+#   Bj.table.job.where ...
 #
   module API
   #
@@ -13,7 +13,7 @@ class Bj
   # strings.  options are applied to each job in the 'jobs', and the list of
   # submitted jobs is always returned.  options (string or symbol) can be
   #
-  #   :rails_env => production|development|key_in_database_yml 
+  #   :rails_env => production|development|key_in_database_yml
   #                 when given this keyword causes bj to submit jobs to the
   #                 specified database.  default is RAILS_ENV.
   #
@@ -36,7 +36,7 @@ class Bj
   #
   #   jobs = Bj.submit './script/runner /dev/stdin', :stdin => 'p RAILS_ENV', :tag => 'dynamic ruby code'
   #
-  #   jobs = Bj.submit array_of_commands, :priority => 451 
+  #   jobs = Bj.submit array_of_commands, :priority => 451
   #
   # when jobs are run, they are run in RAILS_ROOT.  various attributes are
   # available *only* once the job has finished.  you can check whether or not
@@ -47,7 +47,7 @@ class Bj
   #
   #   jobs = Bj.submit list_of_jobs, :tag => 'important'
   #   ...
-  #   
+  #
   #   jobs.each do |job|
   #     if job.finished?
   #       p job.exit_status
@@ -90,8 +90,8 @@ class Bj
     def list options = {}, &block
       options.to_options!
       Bj.transaction(options) do
-        options.delete :rails_env
-        table.job.find(:all, options)
+        # options.delete :rails_env
+        table.job.where(options[:conditions]).to_a
       end
     end
   #
@@ -150,7 +150,7 @@ class Bj
       end
     end
   #
-  # install plugin into this rails app 
+  # install plugin into this rails app
   #
     def plugin options = {}
       options.to_options!
